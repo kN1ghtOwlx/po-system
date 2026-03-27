@@ -24,4 +24,4 @@ app.include_router(orders.router)
 
 @app.get("/")
 def root():
-    return {"message": "Erp system is running"}
+    return {"message": "PO system is running"}
