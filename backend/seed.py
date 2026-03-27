@@ -1,5 +1,5 @@
 from database import SessionLocal
-from models import Vendor, Product, PurchaseOrder, POItem
+from models import Vendor, Product
 
 db = SessionLocal()
 
