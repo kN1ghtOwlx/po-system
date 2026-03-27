@@ -6,10 +6,11 @@ from schemas import POCreate, POOut
 from typing import List
 import uuid
 from routers.auth import get_current_user
+from decimal import Decimal
 
 router = APIRouter(prefix="/orders", tags=["Orders"])
 
-TAX_RATE = 0.05
+TAX_RATE = Decimal("0.05")
 
 def calculate_total(db: Session, po_id: int):
     items = db.query(POItem).filter(POItem.po_id == po_id).all()
