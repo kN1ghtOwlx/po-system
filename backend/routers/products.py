@@ -16,7 +16,7 @@ def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     existing = db.query(Product).filter(Product.sku == product.sku).first()
     if existing:
         raise HTTPException(status_code=400, detail="SKU already exists")
-    new_product = Product(**product.dict())
+    new_product = Product(**product.model_dump())
     db.add(new_product)
     db.commit()
     db.refresh(new_product)

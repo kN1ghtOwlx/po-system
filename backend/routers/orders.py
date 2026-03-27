@@ -5,6 +5,7 @@ from models import PurchaseOrder, POItem
 from schemas import POCreate, POOut
 from typing import List
 import uuid
+from routers.auth import get_current_user
 
 router = APIRouter(prefix="/orders", tags=["Orders"])
 
@@ -24,7 +25,7 @@ def get_orders(db: Session = Depends(get_db)):
     return db.query(PurchaseOrder).all()
 
 @router.post("/", response_model=POOut)
-def create_order(po: POCreate, db: Session = Depends(get_db)):
+def create_order(po: POCreate, db: Session = Depends(get_db), user: str = Depends(get_current_user)):
     ref_no = "PO-" + str(uuid.uuid4())[:8].upper()
     new_po = PurchaseOrder(reference_no=ref_no, vendor_id=po.vendor_id)
     db.add(new_po)
@@ -46,7 +47,7 @@ def create_order(po: POCreate, db: Session = Depends(get_db)):
     return new_po
 
 @router.patch("/{order_id}/status")
-def update_status(order_id: int, status: str, db: Session = Depends(get_db)):
+def update_status(order_id: int, status: str, db: Session = Depends(get_db), user: str = Depends(get_current_user)):
     valid = ["DRAFT", "SUBMITTED", "APPROVED", "REJECTED"]
     if status not in valid:
         raise HTTPException(status_code=400, detail=f"Status must be one of {valid}")
