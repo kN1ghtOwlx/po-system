@@ -72,7 +72,7 @@ vendors ──< purchase_orders ──< po_items >── products
 
 ### 1. Clone the repo
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/kN1ghtOwlx/po-system.git
 cd po-management
 ```
 
